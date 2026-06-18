@@ -77,46 +77,7 @@ use *real, citable physical constants* (lapse rate, geothermal gradient,
 diurnal phase lag) rather than made-up numbers, while staying simple enough
 to run every frame.
 
-## Setup
 
-You'll need the official NeoForge template, then drop these files in —
-this keeps you on a known-good Gradle/wrapper setup rather than one I hand
-assembled blind.
-
-1. **Get the template.** Download/clone the official MDK for 1.21.1:
-   `https://github.com/NeoForgeMDKs/MDK-1.21.1-NeoGradle`
-   (click "Use this template" on GitHub, or download the ZIP).
-
-2. **Copy these files into the template, overwriting where they already
-   exist:**
-   - `src/main/resources/META-INF/neoforge.mods.toml` → replace the
-     template's copy with the one in this package.
-   - `src/main/java/com/tempmod/realtemp/*.java` → copy the whole folder
-     into the template's `src/main/java/`.
-
-3. **Edit `gradle.properties`** (in the template) and change just these
-   lines — leave `minecraft_version` / `neo_version` alone, since those
-   need to match whatever the template ships with:
-   ```
-   mod_id=realtemp
-   mod_name=RealTemp
-   mod_license=MIT
-   mod_version=1.0.0
-   mod_group_id=com.tempmod
-   mod_authors=YourNameHere
-   mod_description=Real-physics temperature HUD based on altitude, biome, time of day, and sunlight.
-   ```
-
-4. **Open the project in IntelliJ IDEA or Eclipse** (both have built-in
-   Gradle support) and let it sync — first sync downloads NeoForge and
-   decompiles Minecraft, which can take a while.
-
-5. **Run it**: use the `runClient` Gradle task (or the generated "Client"
-   run configuration in your IDE). You should see a temperature readout
-   appear in the top-left corner once you're in a world.
-
-6. **Build a distributable jar** with `gradlew build` — the output lands in
-   `build/libs/`.
 
 ## Configuration
 
