@@ -29,6 +29,14 @@ public class Config {
     public static final ModConfigSpec.IntValue HUD_X;
     public static final ModConfigSpec.IntValue HUD_Y;
 
+    // Temperature damage settings
+    public static final ModConfigSpec.BooleanValue ENABLE_TEMPERATURE_DAMAGE;
+    public static final ModConfigSpec.DoubleValue COLD_DAMAGE_THRESHOLD_C;
+    public static final ModConfigSpec.DoubleValue HEAT_DAMAGE_THRESHOLD_C;
+    public static final ModConfigSpec.DoubleValue TEMPERATURE_DAMAGE_MULTIPLIER;
+    public static final ModConfigSpec.IntValue TEMPERATURE_DAMAGE_INTERVAL_TICKS;
+    public static final ModConfigSpec.DoubleValue TEMPERATURE_DAMAGE_MAX_PER_TICK;
+
     static {
         ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
 
@@ -122,6 +130,53 @@ public class Config {
 
         HUD_X = builder.defineInRange("hud_x", 4, 0, 8000);
         HUD_Y = builder.defineInRange("hud_y", 4, 0, 8000);
+
+        builder.pop();
+
+        builder.comment(
+                "Temperature damage settings.",
+                "Player takes damage when temperature is <= cold_damage_threshold_c",
+                "or >= heat_damage_threshold_c"
+        ).push("temperature_damage");
+
+        ENABLE_TEMPERATURE_DAMAGE = builder
+                .comment("Enable player damage based on extreme temperatures.")
+                .define("enable_temperature_damage", true);
+
+        COLD_DAMAGE_THRESHOLD_C = builder
+                .comment(
+                        "Temperature in Celsius at which cold damage starts.",
+                        "Default: 6°C (44°F). Below this, player takes damage."
+                )
+                .defineInRange("cold_damage_threshold_c", 6.0, -100.0, 50.0);
+
+        HEAT_DAMAGE_THRESHOLD_C = builder
+                .comment(
+                        "Temperature in Celsius at which heat damage starts.",
+                        "Default: 35°C (95°F). Above this, player takes damage."
+                )
+                .defineInRange("heat_damage_threshold_c", 35.0, 0.0, 100.0);
+
+        TEMPERATURE_DAMAGE_MULTIPLIER = builder
+                .comment(
+                        "Damage multiplier per degree Celsius beyond the threshold.",
+                        "Default: 0.05 = 0.05 half-hearts per degree over threshold."
+                )
+                .defineInRange("temperature_damage_multiplier", 0.05, 0.0, 1.0);
+
+        TEMPERATURE_DAMAGE_INTERVAL_TICKS = builder
+                .comment(
+                        "How often to apply damage (in ticks). 20 ticks = 1 second.",
+                        "Default: 20 ticks (once per second)."
+                )
+                .defineInRange("temperature_damage_interval_ticks", 20, 1, 100);
+
+        TEMPERATURE_DAMAGE_MAX_PER_TICK = builder
+                .comment(
+                        "Maximum damage (in half-hearts) that can be applied per damage interval.",
+                        "Default: 3.0 (1.5 hearts per second max)."
+                )
+                .defineInRange("temperature_damage_max_per_tick", 3.0, 0.5, 10.0);
 
         builder.pop();
 
