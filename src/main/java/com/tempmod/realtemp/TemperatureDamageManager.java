@@ -89,7 +89,8 @@ public class TemperatureDamageManager {
             }
 
             // Maximum damage cap to prevent one-shots
-            float maxDamage = (float) Config.TEMPERATURE_DAMAGE_MAX_PER_TICK.get();
+            double maxDamageDouble = Config.TEMPERATURE_DAMAGE_MAX_PER_TICK.get();
+            float maxDamage = maxDamageDouble.floatValue();
             if (damageAmount > maxDamage) {
                 damageAmount = maxDamage;
             }
